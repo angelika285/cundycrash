@@ -4,14 +4,18 @@ from tkinter import *
 import tkinter as tk
 from PIL import ImageTk, Image
 from random import *
+from gameButtons import gameButtons
 
 view = Tk()
 view.title("cundy crash")
 
-#for r in field:
-#    for c in r:
-#        print(c, end = " ")
-#    print()
+gameButtons = gameButtons()
+field = gameButtons.getField()
+
+for r in field:
+    for c in r:
+        print(c, end = " ")
+    print()
 
 b = Button(view, text = "hhhhhh")
 b.pack()
