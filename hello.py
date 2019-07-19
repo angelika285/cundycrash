@@ -2,7 +2,7 @@ import sys
 from array import *
 from tkinter import *
 import tkinter as tk
-#from PIL import ImageTk, Image
+from PIL import ImageTk, Image
 
 view = Tk()
 view.title("cundy crash")
@@ -19,9 +19,7 @@ for r in field:
 b = Button(view, text = "hhhhhh")
 b.pack()
 
-img = tk.PhotoImage(file = "C:\python\img\java.gif")
-
-panel = tk.Label(view, image = img)
-panel.pack()
+original = Image.open("img/java.png") # load an image from the hard drive
+original.show()
 
 view.mainloop()
