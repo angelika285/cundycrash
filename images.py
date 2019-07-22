@@ -7,3 +7,6 @@ class Images(Enum):
     PYTHON = 3, "img/python.png"
     VSC = 4, "img/vsc.png"
     
+    def __init__(self, number, path):
+        self.number = number
+        self.path = path

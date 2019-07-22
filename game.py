@@ -6,6 +6,7 @@ from PIL import ImageTk, Image
 from random import *
 from gameButtons import gameButtons
 import numpy as np
+from images import Images
 
 class game(Tk.Frame):
     def __init__(self,parent):
