@@ -30,7 +30,13 @@ class game(Tk.Frame):
         self.gameButtons = gameButtons()
         for i in range(0, self.gameButtons.getFields().shape[0]):
             for j in range(0, self.gameButtons.getFields().shape[1]):
-                self.b = Tk.Button(self.frame, text = self.gameButtons.getField(i, j))
+
+                for image in Images:
+                    if (self.gameButtons.getField(i,j) == image.getNumber()):
+                        self.original = Image.open(image.getPath())
+                        self.ph_im = ImageTk.PhotoImage(self.original)
+                        self.b = Tk.Button(self.frame, image=self.ph_im)
+                        self.b.image = self.ph_im
                 self.b.grid(row=i,  column= j)
 
 if __name__ == "__main__": 
