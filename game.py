@@ -21,17 +21,15 @@ class game(Tk.Frame):
         self.frame = Tk.Frame(self.parent)  
         self.frame.pack(fill=Tk.X, padx=5, pady=5)
 
-        self.gameButtons = gameButtons()
-        self.a = self.gameButtons.getField()
-    
         #for r in self.a:
         #    for c in r:
         #       print(c, end = " ")
         #    print()
 
-        for i in range(0,self.a.shape[0]):
-            for j in range(0,self.a.shape[1]):
-                self.b = Tk.Button(self.frame, text = self.a[i, j])
+        self.gameButtons = gameButtons()
+        for i in range(0, self.gameButtons.getFields().shape[0]):
+            for j in range(0, self.gameButtons.getFields().shape[1]):
+                self.b = Tk.Button(self.frame, text = self.gameButtons.getField(i, j))
                 self.b.grid(row=i,  column= j)
 
 if __name__ == "__main__": 
