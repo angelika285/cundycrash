@@ -36,6 +36,7 @@ class game(Tk.Frame):
                         self.original = Image.open(image.getPath())
                         self.ph_im = ImageTk.PhotoImage(self.original)
                         self.b = Tk.Button(self.frame, image=self.ph_im)
+                        #self.b.config(bg=text_org_bg)
                         self.b.image = self.ph_im
                 self.b.grid(row=i,  column= j)
 
