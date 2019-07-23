@@ -10,6 +10,7 @@ from Images import Images
 
 class GameView(Tk.Frame):
     scoreLabel = None
+    field = None
 
     def __init__(self,parent):
         Tk.Frame.__init__(self, parent)
@@ -31,8 +32,9 @@ class GameView(Tk.Frame):
         self.scoreLabel.grid(row=0, column=1)
 
         self.gameButtons = GameButtons()
-        for i in range(0, self.gameButtons.getFields().shape[0]):
-            for j in range(0, self.gameButtons.getFields().shape[1]):
+        self.field = self.gameButtons.getFields()
+        for i in range(0, self.field.shape[0]):
+            for j in range(0, self.field.shape[1]):
 
                 for image in Images:
                     if (self.gameButtons.getField(i,j) == image.getNumber()):
