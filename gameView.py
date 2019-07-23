@@ -53,6 +53,9 @@ class GameView(Tk.Frame):
     def setScoreLabel(self, score):
         self.scoreLabel.config(text=score)
 
+    def getField(self):
+        return self.field
+
 if __name__ == "__main__": 
     root=Tk.Tk()
     app = GameView(root)   
