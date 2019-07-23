@@ -5,12 +5,12 @@ class GameController:
         self.scoreLabel = scoreLabel
         self.field = field
 
-    def buttonClicked(self):
-        print('I has been clicked')
+    def buttonClicked(self, i, j):
+        print('Button[',i,'][',j,'] has been clicked')
 
     def checkColumn(self):
         for row in range(0, self.field.shape[0]):
-            for column in range(0, self.field.shape[1]):
+            for column in range(0, self.field.shape[1]-3):
                 points += self.checkForEarnedPoints(self.checkItemInColumn(row, column))
         self.setScoreLabel(points)
 
