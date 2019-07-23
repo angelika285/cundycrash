@@ -43,6 +43,12 @@ class game(Tk.Frame):
                         self.b.image = self.ph_im
                 self.b.grid(row=i + 1,  column= j)
 
+    def getScoreLabel(self):
+        return self.scoreLabel
+    
+    def setScoreLabel(self, score):
+        self.scoreLabel.config(text=score)
+
 if __name__ == "__main__": 
     root=Tk.Tk()
     app = game(root)   
