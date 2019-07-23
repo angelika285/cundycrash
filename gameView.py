@@ -12,7 +12,7 @@ from GameController import GameController
 class GameView(Tk.Frame):
     scoreLabel = None
     field = None
-    gameController = GameController()
+    gameController = GameController(scoreLabel, field)
 
     def __init__(self,parent):
         Tk.Frame.__init__(self, parent)
@@ -52,9 +52,6 @@ class GameView(Tk.Frame):
     
     def setScoreLabel(self, score):
         self.scoreLabel.config(text=score)
-
-    def getField(self):
-        return self.field
 
 if __name__ == "__main__": 
     root=Tk.Tk()
