@@ -6,6 +6,7 @@ class Images(Enum):
     JETBRAINS = 2, "img/jetbrains.png"
     PYTHON = 3, "img/python.png"
     VSC = 4, "img/vsc.png"
+    JS = 5, "img/js.png"
     
     def __new__(cls, *args, **kwds):
         obj = object.__new__(cls)
