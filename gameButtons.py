@@ -2,11 +2,12 @@ from random import*
 import numpy as np
 
 class gameButtons:
-    numberOfFields = 9
+    numberOfRows = 9
+    numberOfColumns = 10
     field = None
 
     def __init__(self):
-        self.field = np.random.randint(6, size=(self.numberOfFields, self.numberOfFields))
+        self.field = np.random.randint(6, size=(self.numberOfColumns, self.numberOfRows))
     
     def getFields(self):
         return self.field
