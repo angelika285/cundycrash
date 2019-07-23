@@ -5,7 +5,8 @@ class GameController:
         self.scoreLabel = scoreLabel
         self.field = field
 
-    def buttonClicked(self, i, j):
+    def buttonClicked(self, i, j, buttenIds):
+        buttenIds[i*j].configure(highlightbackground='#3E4149')
         print('Button[',i,'][',j,'] has been clicked')
 
     def checkColumn(self):
