@@ -7,10 +7,12 @@ from random import *
 from GameButtons import GameButtons
 import numpy as np
 from Images import Images
+from GameController import GameController
 
 class GameView(Tk.Frame):
     scoreLabel = None
     field = None
+    gameController = GameController()
 
     def __init__(self,parent):
         Tk.Frame.__init__(self, parent)
@@ -40,10 +42,10 @@ class GameView(Tk.Frame):
                     if (self.gameButtons.getField(i,j) == image.getNumber()):
                         self.original = Image.open(image.getPath())
                         self.ph_im = ImageTk.PhotoImage(self.original)
-                        self.b = Tk.Button(self.frame, image=self.ph_im)
-                        #self.b.config(bg=text_org_bg)
+                        self.b = Tk.Button(self.frame, image=self.ph_im, command=self.gameController.buttonClicked)
                         self.b.image = self.ph_im
                 self.b.grid(row=i + 1,  column= j)
+        print("haha")
 
     def getScoreLabel(self):
         return self.scoreLabel
