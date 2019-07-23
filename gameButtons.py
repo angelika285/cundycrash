@@ -6,7 +6,7 @@ class gameButtons:
     field = None
 
     def __init__(self):
-        self.field = np.random.randint(5, size=(self.numberOfFields, self.numberOfFields))
+        self.field = np.random.randint(6, size=(self.numberOfFields, self.numberOfFields))
     
     def getFields(self):
         return self.field
