@@ -12,7 +12,7 @@ from GameController import GameController
 class GameView(Tk.Frame):
     scoreLabel = None
     field = None
-    gameController = GameController()
+    gameController = GameController(scoreLabel, field)
 
     def __init__(self,parent):
         Tk.Frame.__init__(self, parent)
@@ -35,6 +35,8 @@ class GameView(Tk.Frame):
 
         self.gameButtons = GameButtons()
         self.field = self.gameButtons.getFields()
+        self.buttonIds = []
+
         for i in range(0, self.field.shape[0]):
             for j in range(0, self.field.shape[1]):
 
@@ -42,19 +44,20 @@ class GameView(Tk.Frame):
                     if (self.gameButtons.getField(i,j) == image.getNumber()):
                         self.original = Image.open(image.getPath())
                         self.ph_im = ImageTk.PhotoImage(self.original)
-                        self.b = Tk.Button(self.frame, image=self.ph_im, command=self.gameController.buttonClicked)
+                        self.b = Tk.Button(self.frame, image=self.ph_im, command=lambda i=i, j=j:self.gameController.buttonClicked(i, j, self.buttonIds))
                         self.b.image = self.ph_im
+                        self.buttonIds.append(self.b)
                 self.b.grid(row=i + 1,  column= j)
-        print("haha")
+        #print(self.buttonIds)
+
+    def setBackground(self, i, j):
+        self.buttonIds[i+j].configure(bg='green')
 
     def getScoreLabel(self):
         return self.scoreLabel
     
     def setScoreLabel(self, score):
         self.scoreLabel.config(text=score)
-
-    def getField(self):
-        return self.field
 
 if __name__ == "__main__": 
     root=Tk.Tk()
