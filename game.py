@@ -22,10 +22,8 @@ class game(Tk.Frame):
         self.frame = Tk.Frame(self.parent)  
         self.frame.pack(fill=Tk.X, padx=5, pady=5)
 
-        #for r in self.a:
-        #    for c in r:
-        #       print(c, end = " ")
-        #    print()
+        scoreLabel = Label(self.frame, text="Score:")
+        scoreLabel.grid(row=0, column=0)
 
         self.gameButtons = gameButtons()
         for i in range(0, self.gameButtons.getFields().shape[0]):
@@ -38,14 +36,9 @@ class game(Tk.Frame):
                         self.b = Tk.Button(self.frame, image=self.ph_im)
                         #self.b.config(bg=text_org_bg)
                         self.b.image = self.ph_im
-                self.b.grid(row=i,  column= j)
+                self.b.grid(row=i + 1,  column= j)
 
 if __name__ == "__main__": 
     root=Tk.Tk()
     app = game(root)   
     root.mainloop()
-
-
-###########################################
-
-#original = Image.open("img/java.png") # load an image from the hard drive
