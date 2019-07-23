@@ -9,6 +9,8 @@ import numpy as np
 from images import Images
 
 class game(Tk.Frame):
+
+
     def __init__(self,parent):
         Tk.Frame.__init__(self, parent)
         self.parent = parent
@@ -22,8 +24,8 @@ class game(Tk.Frame):
         self.frame = Tk.Frame(self.parent)  
         self.frame.pack(fill=Tk.X, padx=5, pady=5)
 
-        scoreLabel = Label(self.frame, text="Score:")
-        scoreLabel.grid(row=0, column=0)
+        scoreTextLabel = Label(self.frame, text="Score:")
+        scoreTextLabel.grid(row=0, column=0)
 
         self.gameButtons = gameButtons()
         for i in range(0, self.gameButtons.getFields().shape[0]):
