@@ -1,7 +1,7 @@
 from random import*
 import numpy as np
 
-class gameButtons:
+class GameButtons:
     numberOfRows = 9
     numberOfColumns = 10
     field = None

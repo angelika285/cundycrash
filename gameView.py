@@ -4,11 +4,11 @@ from tkinter import *
 import tkinter as Tk
 from PIL import ImageTk, Image
 from random import *
-from gameButtons import gameButtons
+from GameButtons import GameButtons
 import numpy as np
-from images import Images
+from Images import Images
 
-class gameView(Tk.Frame):
+class GameView(Tk.Frame):
     scoreLabel = None
 
     def __init__(self,parent):
@@ -30,7 +30,7 @@ class gameView(Tk.Frame):
         self.scoreLabel = Label(self.frame)
         self.scoreLabel.grid(row=0, column=1)
 
-        self.gameButtons = gameButtons()
+        self.gameButtons = GameButtons()
         for i in range(0, self.gameButtons.getFields().shape[0]):
             for j in range(0, self.gameButtons.getFields().shape[1]):
 
@@ -51,5 +51,5 @@ class gameView(Tk.Frame):
 
 if __name__ == "__main__": 
     root=Tk.Tk()
-    app = gameView(root)   
+    app = GameView(root)   
     root.mainloop()
