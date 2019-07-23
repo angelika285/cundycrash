@@ -8,7 +8,7 @@ from gameButtons import gameButtons
 import numpy as np
 from images import Images
 
-class game(Tk.Frame):
+class gameView(Tk.Frame):
     scoreLabel = None
 
     def __init__(self,parent):
@@ -51,5 +51,5 @@ class game(Tk.Frame):
 
 if __name__ == "__main__": 
     root=Tk.Tk()
-    app = game(root)   
+    app = gameView(root)   
     root.mainloop()
