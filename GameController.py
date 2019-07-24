@@ -55,9 +55,6 @@ class GameController:
     def secondButtonIsUnderFirstButton(self, selectedButton):
         return self.firstSelectedButton.row == selectedButton.row +1
 
-    def getSelectedButton(self, i, j):
-        return (i*9)+j
-
     def checkColumn(self):
         for row in range(0, self.field.shape[0]):
             for column in range(0, self.field.shape[1]-3):
