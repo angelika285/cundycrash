@@ -6,11 +6,15 @@ class GameController:
         self.field = field
         self.oneButtonIsSelected = False
         self.firstSelectedButton = None
+        self.rowOfFirstSelectedButton = None
+        self.columnOfFirstSelectedButton = None
         self.secondSelectedButton = None
 
     def buttonClicked(self, i, j, buttenIds):
         if not self.oneButtonIsSelected:
             self.firstSelectedButton = self.getSelectedButton(i,j)
+            self.rowOfFirstSelectedButton = i
+            self.columnOfFirstSelectedButton = j
             buttenIds[self.firstSelectedButton].configure(highlightbackground='#3E4149')
             self.oneButtonIsSelected = True
         elif self.firstSelectedButtonIsNotSecondSelectedButton(i,j):
@@ -23,6 +27,9 @@ class GameController:
 
     def firstSelectedButtonIsNotSecondSelectedButton(self, i, j):
         return not self.firstSelectedButton == self.getSelectedButton(i,j)
+
+    def secondSelectedButtonIsNextToFirstSelectedButton(self, i, j):
+        return False
 
     def getSelectedButton(self, i, j):
         return (i*9)+j
