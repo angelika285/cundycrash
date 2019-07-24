@@ -12,8 +12,8 @@ class GameController:
         self.firstSelectedButton = None
         self.secondSelectedButton = None
 
-    def buttonClicked(self, i, j, buttonIds):
-        selectedButton = SelectedButton(i,j,buttonIds)
+    def buttonClicked(self, row, column, buttonIds):
+        selectedButton = SelectedButton(row,column,buttonIds)
         if not self.oneButtonIsSelected:
             self.firstButtonAction(selectedButton)
         elif self.firstSelectedButtonIsNotSecondSelectedButton(selectedButton) and (self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow(selectedButton) or self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameColumn(selectedButton)):
