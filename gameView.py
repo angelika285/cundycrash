@@ -43,10 +43,10 @@ class GameView(Tk.Frame):
 
                 for image in Images:
                     if (self.gameButtons.getField(i,j) == image.getNumber()):
-                        self.original = Image.open(image.getPath())
-                        self.ph_im = ImageTk.PhotoImage(self.original)
-                        self.b = Tk.Button(self.frame, image=self.ph_im, command=lambda i=i, j=j:self.gameController.buttonClicked(i, j, self.buttonIds))
-                        self.b.image = self.ph_im
+                        self.originalImage = Image.open(image.getPath())
+                        self.photoImage = ImageTk.PhotoImage(self.originalImage)
+                        self.button = Tk.Button(self.frame, image=self.photoImage, command=lambda i=i, j=j:self.gameController.buttonClicked(i, j, self.buttonIds))
+                        self.button.image = self.photoImage
                         self.buttonIds.append(self.b)
                 self.b.grid(row=i + 1,  column= j)
 
