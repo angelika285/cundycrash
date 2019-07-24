@@ -47,10 +47,10 @@ class GameController:
     def changePicture(self, button):
         for image in Images:
             if self.field[button.row][button.column] == image.getNumber():
-                self.original = Image.open(image.getPath())
-                self.ph_im = ImageTk.PhotoImage(self.original)
-                button.button.configure(image=self.ph_im)
-                button.button.image = self.ph_im
+                self.originalImage = Image.open(image.getPath())
+                self.photoImage = ImageTk.PhotoImage(self.originalImage)
+                button.button.configure(image=self.photoImage)
+                button.button.image = self.photoImage
 
     def changeFieldValues(self):
         temp = self.field[self.firstSelectedButton.row][self.firstSelectedButton.column]
