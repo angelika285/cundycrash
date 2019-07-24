@@ -8,11 +8,14 @@ class GameController:
 
     def buttonClicked(self, i, j, buttenIds):
         if not self.oneButtonIsSelected:
-            buttenIds[(i*9)+j].configure(highlightbackground='#3E4149')
+            buttenIds[self.getSelectedButton].configure(highlightbackground='#3E4149')
             self.oneButtonIsSelected = True
         else:
-            buttenIds[(i*9)+j].configure(highlightbackground='#9c498c')
+            buttenIds[self.getSelectedButton].configure(highlightbackground='#9c498c')
             self.oneButtonIsSelected = False
+
+    def getSelectedButton(self, i, j):
+        return (i*9)+j
 
     def checkColumn(self):
         for row in range(0, self.field.shape[0]):
