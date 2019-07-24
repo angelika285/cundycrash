@@ -17,7 +17,7 @@ class GameController:
             self.columnOfFirstSelectedButton = j
             buttenIds[self.firstSelectedButton].configure(highlightbackground='#3E4149')
             self.oneButtonIsSelected = True
-        elif self.firstSelectedButtonIsNotSecondSelectedButton(i,j) and self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow(i,j):
+        elif self.firstSelectedButtonIsNotSecondSelectedButton(i,j) and (self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow(i,j) or self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameColumn(i,j)):
             self.secondSelectedButton = self.getSelectedButton(i,j)
             buttenIds[self.secondSelectedButton].configure(highlightbackground='#9c498c')
             self.oneButtonIsSelected = False
@@ -29,9 +29,9 @@ class GameController:
         return not self.firstSelectedButton == self.getSelectedButton(i,j)
 
     def secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow(self, row, column):
-        return self.secondButtonIsInSameRowAsFirstButton(row, column) and (self.secondButtonIsLeftOfFirstButton(column) or self.secondButtonIsRightOfFirstButton(column))
+        return self.secondButtonIsInSameRowAsFirstButton(row) and (self.secondButtonIsLeftOfFirstButton(column) or self.secondButtonIsRightOfFirstButton(column))
 
-    def secondButtonIsInSameRowAsFirstButton(self, row, column):
+    def secondButtonIsInSameRowAsFirstButton(self, row):
         return self.rowOfFirstSelectedButton == row
 
     def secondButtonIsLeftOfFirstButton(self, column):
@@ -39,6 +39,18 @@ class GameController:
 
     def secondButtonIsRightOfFirstButton(self, column):
         return self.columnOfFirstSelectedButton == column+1
+
+    def secondSelectedButtonIsNextToFirstSelectedButtonInTheSameColumn(self, row, colum):
+        return self.secondButtonIsInSameColumnAsFirstButton(colum) and (self.secondButtonIsAboveOfFirstButton(row) or self.secondButtonIsUnderFirstButton(row))
+
+    def secondButtonIsInSameColumnAsFirstButton(self, column):
+        return self.columnOfFirstSelectedButton == column
+
+    def secondButtonIsAboveOfFirstButton(self, row):
+        return self.rowOfFirstSelectedButton == row-1
+
+    def secondButtonIsUnderFirstButton(self, row):
+        return self.rowOfFirstSelectedButton == row+1
 
     def getSelectedButton(self, i, j):
         return (i*9)+j
