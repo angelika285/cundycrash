@@ -4,9 +4,15 @@ class GameController:
         self.points = 0
         self.scoreLabel = scoreLabel
         self.field = field
+        self.oneButtonIsSelected = False
 
     def buttonClicked(self, i, j, buttenIds):
-        buttenIds[(i*9)+j].configure(highlightbackground='#3E4149')
+        if not self.oneButtonIsSelected:
+            buttenIds[(i*9)+j].configure(highlightbackground='#3E4149')
+            self.oneButtonIsSelected = True
+        else:
+            buttenIds[(i*9)+j].configure(highlightbackground='#9c498c')
+            self.oneButtonIsSelected = False
 
     def checkColumn(self):
         for row in range(0, self.field.shape[0]):
@@ -16,7 +22,7 @@ class GameController:
 
     def checkItemInColumn(self, row, column):
         sameValue = 0
-        while (self.field[row, column] == self.field[row, column+1]):
+        while self.field[row, column] == self.field[row, column+1]:
             sameValue += 1
             column += 1
         return sameValue
