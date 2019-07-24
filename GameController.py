@@ -1,3 +1,5 @@
+from SelectedButton import SelectedButton
+
 class GameController:
     
     def __init__(self, scoreLabel, field):
@@ -6,51 +8,48 @@ class GameController:
         self.field = field
         self.oneButtonIsSelected = False
         self.firstSelectedButton = None
-        self.rowOfFirstSelectedButton = None
-        self.columnOfFirstSelectedButton = None
         self.secondSelectedButton = None
 
-    def buttonClicked(self, i, j, buttenIds):
+    def buttonClicked(self, i, j, buttonIds):
+        selectedButton = SelectedButton(i,j,buttonIds)
         if not self.oneButtonIsSelected:
-            self.firstSelectedButton = self.getSelectedButton(i,j)
-            self.rowOfFirstSelectedButton = i
-            self.columnOfFirstSelectedButton = j
-            buttenIds[self.firstSelectedButton].configure(highlightbackground='#3E4149')
+            self.firstSelectedButton = selectedButton
+            self.firstSelectedButton.button.configure(highlightbackground='#3E4149')
             self.oneButtonIsSelected = True
-        elif self.firstSelectedButtonIsNotSecondSelectedButton(i,j) and (self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow(i,j) or self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameColumn(i,j)):
-            self.secondSelectedButton = self.getSelectedButton(i,j)
-            buttenIds[self.secondSelectedButton].configure(highlightbackground='#9c498c')
+        elif self.firstSelectedButtonIsNotSecondSelectedButton(selectedButton) and (self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow(selectedButton) or self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameColumn(selectedButton)):
+            self.secondSelectedButton = selectedButton
+            self.secondSelectedButton.button.configure(highlightbackground='#9c498c')
             self.oneButtonIsSelected = False
         else:
-            buttenIds[self.firstSelectedButton].configure(highlightbackground='#e8e8e8')
+            self.firstSelectedButton.button.configure(highlightbackground='#e8e8e8')
             self.oneButtonIsSelected = False
 
-    def firstSelectedButtonIsNotSecondSelectedButton(self, i, j):
-        return not self.firstSelectedButton == self.getSelectedButton(i,j)
+    def firstSelectedButtonIsNotSecondSelectedButton(self, selectedButton):
+        return not self.firstSelectedButton.button == selectedButton.button
 
-    def secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow(self, row, column):
-        return self.secondButtonIsInSameRowAsFirstButton(row) and (self.secondButtonIsLeftOfFirstButton(column) or self.secondButtonIsRightOfFirstButton(column))
+    def secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow(self, selectedButton):
+        return self.secondButtonIsInSameRowAsFirstButton(selectedButton) and (self.secondButtonIsLeftOfFirstButton(selectedButton) or self.secondButtonIsRightOfFirstButton(selectedButton))
 
-    def secondButtonIsInSameRowAsFirstButton(self, row):
-        return self.rowOfFirstSelectedButton == row
+    def secondButtonIsInSameRowAsFirstButton(self, selectedButton):
+        return self.firstSelectedButton.row == selectedButton.row
 
-    def secondButtonIsLeftOfFirstButton(self, column):
-        return self.columnOfFirstSelectedButton == column-1
+    def secondButtonIsLeftOfFirstButton(self, selectedButton):
+        return self.firstSelectedButton.column == selectedButton.column -1
 
-    def secondButtonIsRightOfFirstButton(self, column):
-        return self.columnOfFirstSelectedButton == column+1
+    def secondButtonIsRightOfFirstButton(self, selectedButton):
+        return self.firstSelectedButton.column == selectedButton.column +1
 
-    def secondSelectedButtonIsNextToFirstSelectedButtonInTheSameColumn(self, row, colum):
-        return self.secondButtonIsInSameColumnAsFirstButton(colum) and (self.secondButtonIsAboveOfFirstButton(row) or self.secondButtonIsUnderFirstButton(row))
+    def secondSelectedButtonIsNextToFirstSelectedButtonInTheSameColumn(self, selectedButton):
+        return self.secondButtonIsInSameColumnAsFirstButton(selectedButton) and (self.secondButtonIsAboveOfFirstButton(selectedButton) or self.secondButtonIsUnderFirstButton(selectedButton))
 
-    def secondButtonIsInSameColumnAsFirstButton(self, column):
-        return self.columnOfFirstSelectedButton == column
+    def secondButtonIsInSameColumnAsFirstButton(self, selectedButton):
+        return self.firstSelectedButton.column == selectedButton.column
 
-    def secondButtonIsAboveOfFirstButton(self, row):
-        return self.rowOfFirstSelectedButton == row-1
+    def secondButtonIsAboveOfFirstButton(self, selectedButton):
+        return self.firstSelectedButton.row == selectedButton.row -1
 
-    def secondButtonIsUnderFirstButton(self, row):
-        return self.rowOfFirstSelectedButton == row+1
+    def secondButtonIsUnderFirstButton(self, selectedButton):
+        return self.firstSelectedButton.row == selectedButton.row +1
 
     def getSelectedButton(self, i, j):
         return (i*9)+j
