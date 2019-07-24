@@ -17,6 +17,9 @@ class GameController:
             self.secondSelectedButton = self.getSelectedButton(i,j)
             buttenIds[self.secondSelectedButton].configure(highlightbackground='#9c498c')
             self.oneButtonIsSelected = False
+        else:
+            buttenIds[self.firstSelectedButton].configure(highlightbackground='#e8e8e8')
+            self.oneButtonIsSelected = False
 
     def firstSelectedButtonIsNotSecondSelectedButton(self, i, j):
         return not self.firstSelectedButton == self.getSelectedButton(i,j)

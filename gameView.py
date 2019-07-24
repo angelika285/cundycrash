@@ -49,9 +49,6 @@ class GameView(Tk.Frame):
                         self.buttonIds.append(self.b)
                 self.b.grid(row=i + 1,  column= j)
 
-    def setBackground(self, i, j):
-        self.buttonIds[i+j].configure(bg='green')
-
     def getScoreLabel(self):
         return self.scoreLabel
     
