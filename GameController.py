@@ -5,13 +5,17 @@ class GameController:
         self.scoreLabel = scoreLabel
         self.field = field
         self.oneButtonIsSelected = False
+        self.firstSelectedButton = None
+        self.secondSelectedButton = None
 
     def buttonClicked(self, i, j, buttenIds):
         if not self.oneButtonIsSelected:
-            buttenIds[self.getSelectedButton].configure(highlightbackground='#3E4149')
+            self.firstSelectedButton = self.getSelectedButton(i,j)
+            buttenIds[self.firstSelectedButton].configure(highlightbackground='#3E4149')
             self.oneButtonIsSelected = True
         else:
-            buttenIds[self.getSelectedButton].configure(highlightbackground='#9c498c')
+            self.secondSelectedButton = self.getSelectedButton(i,j)
+            buttenIds[self.secondSelectedButton].configure(highlightbackground='#9c498c')
             self.oneButtonIsSelected = False
 
     def getSelectedButton(self, i, j):
