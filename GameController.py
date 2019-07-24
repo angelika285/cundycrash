@@ -17,7 +17,7 @@ class GameController:
             self.columnOfFirstSelectedButton = j
             buttenIds[self.firstSelectedButton].configure(highlightbackground='#3E4149')
             self.oneButtonIsSelected = True
-        elif self.firstSelectedButtonIsNotSecondSelectedButton(i,j):
+        elif self.firstSelectedButtonIsNotSecondSelectedButton(i,j) and self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow(i,j):
             self.secondSelectedButton = self.getSelectedButton(i,j)
             buttenIds[self.secondSelectedButton].configure(highlightbackground='#9c498c')
             self.oneButtonIsSelected = False
@@ -28,8 +28,17 @@ class GameController:
     def firstSelectedButtonIsNotSecondSelectedButton(self, i, j):
         return not self.firstSelectedButton == self.getSelectedButton(i,j)
 
-    def secondSelectedButtonIsNextToFirstSelectedButton(self, i, j):
-        return False
+    def secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow(self, row, column):
+        return self.secondButtonIsInSameRowAsFirstButton(row, column) and (self.secondButtonIsLeftOfFirstButton(column) or self.secondButtonIsRightOfFirstButton(column))
+
+    def secondButtonIsInSameRowAsFirstButton(self, row, column):
+        return self.rowOfFirstSelectedButton == row
+
+    def secondButtonIsLeftOfFirstButton(self, column):
+        return self.columnOfFirstSelectedButton == column-1
+
+    def secondButtonIsRightOfFirstButton(self, column):
+        return self.columnOfFirstSelectedButton == column+1
 
     def getSelectedButton(self, i, j):
         return (i*9)+j
