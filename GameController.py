@@ -16,8 +16,7 @@ class GameController:
             self.firstButtonAction(selectedButton)
             self.oneButtonIsSelected = True
         elif self.firstSelectedButtonIsNotSecondSelectedButton(selectedButton) and (self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow(selectedButton) or self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameColumn(selectedButton)):
-            self.secondSelectedButton = selectedButton
-            self.secondSelectedButton.button.configure(highlightbackground='#9c498c')
+            self.secondButtonAction(selectedButton)
             self.oneButtonIsSelected = False
         elif not self.firstSelectedButtonIsNotSecondSelectedButton(selectedButton):
             self.firstSelectedButton.button.configure(highlightbackground='#e8e8e8')
@@ -29,6 +28,10 @@ class GameController:
     def firstButtonAction(self, selectedButton):
         self.firstSelectedButton = selectedButton
         self.firstSelectedButton.button.configure(highlightbackground='#3E4149')
+    
+    def secondButtonAction(self, selectedButton):
+        self.secondSelectedButton = selectedButton
+        self.secondSelectedButton.button.configure(highlightbackground='#9c498c')
 
     def firstSelectedButtonIsNotSecondSelectedButton(self, selectedButton):
         return not self.firstSelectedButton.button == selectedButton.button
