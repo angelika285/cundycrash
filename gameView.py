@@ -48,7 +48,6 @@ class GameView(Tk.Frame):
                         self.b.image = self.ph_im
                         self.buttonIds.append(self.b)
                 self.b.grid(row=i + 1,  column= j)
-        #print(self.buttonIds)
 
     def setBackground(self, i, j):
         self.buttonIds[i+j].configure(bg='green')

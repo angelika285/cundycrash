@@ -6,8 +6,7 @@ class GameController:
         self.field = field
 
     def buttonClicked(self, i, j, buttenIds):
-        buttenIds[i*j].configure(highlightbackground='#3E4149')
-        print('Button[',i,'][',j,'] has been clicked')
+        buttenIds[(i*9)+j].configure(highlightbackground='#3E4149')
 
     def checkColumn(self):
         for row in range(0, self.field.shape[0]):
