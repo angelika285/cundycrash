@@ -1,4 +1,6 @@
 from SelectedButton import SelectedButton
+from Images import Images
+from PIL import ImageTk, Image
 
 class GameController:
     
@@ -30,11 +32,30 @@ class GameController:
     def secondButtonAction(self, selectedButton):
         self.secondSelectedButton = selectedButton
         self.secondSelectedButton.button.configure(highlightbackground='#9c498c')
+        self.changePictures()
         self.oneButtonIsSelected = False
 
     def disselectFirstButtonAction(self):
         self.firstSelectedButton.button.configure(highlightbackground='#e8e8e8')
         self.oneButtonIsSelected = False
+
+    def changePictures(self):
+        self.changeFieldValues()
+        self.changePicture(self.firstSelectedButton)
+        self.changePicture(self.secondSelectedButton)
+    
+    def changePicture(self, button):
+        for image in Images:
+            if self.field[button.row][button.column] == image.getNumber():
+                self.original = Image.open(image.getPath())
+                self.ph_im = ImageTk.PhotoImage(self.original)
+                button.button.configure(image=self.ph_im)
+                button.button.image = self.ph_im
+
+    def changeFieldValues(self):
+        temp = self.field[self.firstSelectedButton.row][self.firstSelectedButton.column]
+        self.field[self.firstSelectedButton.row][self.firstSelectedButton.column] = self.field[self.secondSelectedButton.row][self.secondSelectedButton.column]
+        self.field[self.secondSelectedButton.row][self.secondSelectedButton.column] = temp
 
     def firstSelectedButtonIsNotSecondSelectedButton(self, selectedButton):
         return not self.firstSelectedButton.button == selectedButton.button
