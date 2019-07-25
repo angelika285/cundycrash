@@ -32,9 +32,8 @@ class GameController:
     
     def secondButtonAction(self, selectedButton):
         self.secondSelectedButton = selectedButton
-        self.secondSelectedButton.button.configure(highlightbackground='#9c498c')
+        self.disselectFirstButtonAction()
         self.changePictures()
-        self.oneButtonIsSelected = False
         self.checkRow()
         self.checkColumn()
 
