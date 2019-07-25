@@ -11,11 +11,8 @@ class GameController:
         self.oneButtonIsSelected = False
         self.firstSelectedButton = None
         self.secondSelectedButton = None
-        self.buttonIds = None
 
     def buttonClicked(self, row, column, buttonIds):
-        self.buttonIds = buttonIds
-
         selectedButton = SelectedButton(row,column,buttonIds)
         if not self.oneButtonIsSelected:
             self.firstButtonAction(selectedButton)
@@ -38,6 +35,7 @@ class GameController:
         self.changePictures()
         self.oneButtonIsSelected = False
         self.checkRow()
+        self.checkColumn()
 
     def disselectFirstButtonAction(self):
         self.firstSelectedButton.button.configure(highlightbackground='#e8e8e8')
@@ -97,9 +95,24 @@ class GameController:
     def checkItemInRow(self, row, column):
         sameValue = 1
         # TODO: bei gefundenem paar reihe von neu beginnen
-        while row < 9 and self.field[row][column] == self.field[row][column+1]:
+        while column < 9 and self.field[row][column] == self.field[row][column+1]:
             sameValue += 1
             column += 1
+        return sameValue
+
+    def checkColumn(self):
+        for row in range(0, self.field.shape[0]-3):
+            for column in range(0, self.field.shape[1]):
+                self.points += self.checkForEarnedPoints(self.checkItemInColumn(row, column))
+                column += 1
+        self.setScoreLabel(self.points)
+
+    def checkItemInColumn(self, row, column):
+        # TODO: bei gefundenem paar zeile von neu beginnen
+        sameValue = 1
+        while row < 10 and self.field[row][column] == self.field[row+1][column]:
+            sameValue += 1
+            row += 1
         return sameValue
 
     def checkForEarnedPoints(self, sameValues):
