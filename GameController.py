@@ -11,8 +11,11 @@ class GameController:
         self.oneButtonIsSelected = False
         self.firstSelectedButton = None
         self.secondSelectedButton = None
+        self.buttonIds = None
 
     def buttonClicked(self, row, column, buttonIds):
+        self.buttonIds = buttonIds
+
         selectedButton = SelectedButton(row,column,buttonIds)
         if not self.oneButtonIsSelected:
             self.firstButtonAction(selectedButton)
@@ -34,6 +37,7 @@ class GameController:
         self.secondSelectedButton.button.configure(highlightbackground='#9c498c')
         self.changePictures()
         self.oneButtonIsSelected = False
+        self.checkRow()
 
     def disselectFirstButtonAction(self):
         self.firstSelectedButton.button.configure(highlightbackground='#e8e8e8')
@@ -84,31 +88,39 @@ class GameController:
     def secondButtonIsUnderFirstButton(self, selectedButton):
         return self.firstSelectedButton.row == selectedButton.row +1
 
-    def checkColumn(self):
+    def checkRow(self):
         for row in range(0, self.field.shape[0]):
             for column in range(0, self.field.shape[1]-3):
-                points += self.checkForEarnedPoints(self.checkItemInColumn(row, column))
-        self.setScoreLabel(points)
+                self.points += self.checkForEarnedPoints(self.checkItemInRow(row, column))
+        self.setScoreLabel(self.points)
 
-    def checkItemInColumn(self, row, column):
-        sameValue = 0
-        while self.field[row, column] == self.field[row, column+1]:
+    def checkItemInRow(self, row, column):
+        sameValue = 1
+        # TODO: bei gefundenem paar reihe von neu beginnen
+        while row < 9 and self.field[row][column] == self.field[row][column+1]:
             sameValue += 1
             column += 1
         return sameValue
 
     def checkForEarnedPoints(self, sameValues):
-        switcher = {
-            3: 10,
-            4: 20,
-            5: 30,
-            6: 40,
-            7: 50,
-            8: 60,
-            9: 70,
-            10: 80
-        }
-        return 0
+        if sameValues == 3:
+            return 10
+        elif sameValues == 4:
+            return 20
+        elif sameValues == 5:
+            return 30
+        elif sameValues == 6:
+            return 40
+        elif sameValues == 7:
+            return 50
+        elif sameValues == 8:
+            return 60
+        elif sameValues == 9:
+            return 70
+        elif sameValues == 10:
+            return 80
+        else:
+            return 0
 
     def setScoreLabel(self, score):
-        self.scoreLabel.config(text=score)
+        self.scoreLabel.configure(text=score)
