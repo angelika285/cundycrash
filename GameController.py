@@ -94,7 +94,7 @@ class GameController:
         for row in range(0, self.field.shape[0]):
             for column in range(0, self.field.shape[1]-2):
                 self.pointsInstanz.setEarnedPoints(self.checkItemInRow(row, column))
-        self.setScoreLabel(self.pointsInstanz.points)
+        self.updateScoreLabel()
 
     def checkItemInRow(self, row, column):
         sameValue = 1
@@ -111,7 +111,7 @@ class GameController:
             for column in range(0, self.field.shape[1]):
                 self.pointsInstanz.setEarnedPoints(self.checkItemInColumn(row, column))
                 column += 1
-        self.setScoreLabel(self.pointsInstanz.points)
+        self.updateScoreLabel()
 
     def checkItemInColumn(self, row, column):
         # TODO: bei gefundenem paar zeile von neu beginnen
@@ -143,5 +143,5 @@ class GameController:
                 button = SelectedButton(actualRow, column, self.buttonIds)
                 self.changePicture(button)
 
-    def setScoreLabel(self, score):
-        self.scoreLabel.configure(text=score)
+    def updateScoreLabel(self):
+        self.scoreLabel.configure(text=self.pointsInstanz.points)
