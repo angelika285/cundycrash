@@ -2,11 +2,12 @@ from SelectedButton import SelectedButton
 from Images import Images
 from PIL import ImageTk, Image
 import random
+from Points import Points
 
 class GameController:
     
     def __init__(self, scoreLabel, field):
-        self.points = 0
+        self.pointsInstanz = Points()
         self.scoreLabel = scoreLabel
         self.field = field
         self.oneButtonIsSelected = False
@@ -92,8 +93,8 @@ class GameController:
     def checkRow(self):
         for row in range(0, self.field.shape[0]):
             for column in range(0, self.field.shape[1]-2):
-                self.points += self.checkForEarnedPoints(self.checkItemInRow(row, column))
-        self.setScoreLabel(self.points)
+                self.pointsInstanz.setEarnedPoints(self.checkItemInRow(row, column))
+        self.setScoreLabel(self.pointsInstanz.points)
 
     def checkItemInRow(self, row, column):
         sameValue = 1
@@ -108,9 +109,10 @@ class GameController:
     def checkColumn(self):
         for row in reversed(range(0+2, self.field.shape[0])):
             for column in range(0, self.field.shape[1]):
-                self.points += self.checkForEarnedPoints(self.checkItemInColumn(row, column))
+                #self.points += self.checkForEarnedPoints(self.checkItemInColumn(row, column))
+                self.pointsInstanz.setEarnedPoints(self.checkItemInColumn(row, column))
                 column += 1
-        self.setScoreLabel(self.points)
+        self.setScoreLabel(self.pointsInstanz.points)
 
     def checkItemInColumn(self, row, column):
         # TODO: bei gefundenem paar zeile von neu beginnen
@@ -121,26 +123,6 @@ class GameController:
         if sameValue > 2:
             self.changeColumnFieldValues(sameValue, row+sameValue, column)
         return sameValue
-
-    def checkForEarnedPoints(self, sameValues):
-        if sameValues == 3:
-            return 10
-        elif sameValues == 4:
-            return 20
-        elif sameValues == 5:
-            return 30
-        elif sameValues == 6:
-            return 40
-        elif sameValues == 7:
-            return 50
-        elif sameValues == 8:
-            return 60
-        elif sameValues == 9:
-            return 70
-        elif sameValues == 10:
-            return 80
-        else:
-            return 0
 
     def changeColumnFieldValues(self, sameValues, row, column):
         for row in reversed(range(0, row)):
