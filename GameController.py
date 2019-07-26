@@ -141,7 +141,6 @@ class GameController:
             return 0
 
     def changeColumnFieldValues(self, sameValues, row, column):
-        print()
         for row in reversed(range(0, row)):
             if row >= sameValues:
                 self.field[row][column] = self.field[row-sameValues][column]
