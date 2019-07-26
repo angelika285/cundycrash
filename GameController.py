@@ -109,7 +109,6 @@ class GameController:
     def checkColumn(self):
         for row in reversed(range(0+2, self.field.shape[0])):
             for column in range(0, self.field.shape[1]):
-                #self.points += self.checkForEarnedPoints(self.checkItemInColumn(row, column))
                 self.pointsInstanz.setEarnedPoints(self.checkItemInColumn(row, column))
                 column += 1
         self.setScoreLabel(self.pointsInstanz.points)
