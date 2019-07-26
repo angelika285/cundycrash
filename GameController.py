@@ -1,6 +1,7 @@
 from SelectedButton import SelectedButton
 from Images import Images
 from PIL import ImageTk, Image
+import random
 
 class GameController:
     
@@ -11,8 +12,10 @@ class GameController:
         self.oneButtonIsSelected = False
         self.firstSelectedButton = None
         self.secondSelectedButton = None
+        self.buttonIds = None
 
     def buttonClicked(self, row, column, buttonIds):
+        self.buttonIds = buttonIds
         selectedButton = SelectedButton(row,column,buttonIds)
         if not self.oneButtonIsSelected:
             self.firstButtonAction(selectedButton)
@@ -88,7 +91,7 @@ class GameController:
 
     def checkRow(self):
         for row in reversed(range(0, self.field.shape[0])):
-            for column in range(0, self.field.shape[1]-3):
+            for column in range(0, self.field.shape[1]-2):
                 self.points += self.checkForEarnedPoints(self.checkItemInRow(row, column))
         self.setScoreLabel(self.points)
 
@@ -101,7 +104,7 @@ class GameController:
         return sameValue
 
     def checkColumn(self):
-        for row in reversed(range(0+3, self.field.shape[0])):
+        for row in reversed(range(0+2, self.field.shape[0])):
             for column in range(0, self.field.shape[1]):
                 self.points += self.checkForEarnedPoints(self.checkItemInColumn(row, column))
                 column += 1
@@ -110,9 +113,11 @@ class GameController:
     def checkItemInColumn(self, row, column):
         # TODO: bei gefundenem paar zeile von neu beginnen
         sameValue = 1
-        while row < 9 and self.field[row][column] == self.field[row+1][column]:
+        while row > 0 and self.field[row][column] == self.field[row-1][column]:
             sameValue += 1
-            row += 1
+            row -= 1
+        if sameValue > 2:
+            self.changeColumnFieldValues(sameValue, row+sameValue, column)
         return sameValue
 
     def checkForEarnedPoints(self, sameValues):
@@ -134,6 +139,16 @@ class GameController:
             return 80
         else:
             return 0
+
+    def changeColumnFieldValues(self, sameValues, row, column):
+        print()
+        for row in reversed(range(0, row)):
+            if row >= sameValues:
+                self.field[row][column] = self.field[row-sameValues][column]
+            else:
+                self.field[row][column] = random.randint(0, 6)
+            button = SelectedButton(row, column, self.buttonIds)
+            self.changePicture(button)
 
     def setScoreLabel(self, score):
         self.scoreLabel.configure(text=score)
