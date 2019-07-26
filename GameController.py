@@ -44,8 +44,6 @@ class GameController:
         fieldAnalyzer.checkRow()
         fieldAnalyzer.checkColumn()
         self.updateScoreLabel()
-        #self.checkRow()
-        #self.checkColumn()
 
     def disselectFirstButtonAction(self):
         self.firstSelectedButton.button.configure(highlightbackground='#e8e8e8')
