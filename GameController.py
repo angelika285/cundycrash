@@ -3,6 +3,7 @@ from Images import Images
 from PIL import ImageTk, Image
 import random
 from Points import Points
+from FieldAnalyzer import FieldAnalyzer
 
 class GameController:
     
@@ -39,8 +40,12 @@ class GameController:
         self.secondSelectedButton = selectedButton
         self.disselectFirstButtonAction()
         self.changePictures()
-        self.checkRow()
-        self.checkColumn()
+        fieldAnalyzer = FieldAnalyzer(self.field, self.pointsInstanz, self.buttonIds)
+        fieldAnalyzer.checkRow()
+        fieldAnalyzer.checkColumn()
+        self.updateScoreLabel()
+        #self.checkRow()
+        #self.checkColumn()
 
     def disselectFirstButtonAction(self):
         self.firstSelectedButton.button.configure(highlightbackground='#e8e8e8')
@@ -90,59 +95,6 @@ class GameController:
 
     def secondButtonIsUnderFirstButton(self, selectedButton):
         return self.firstSelectedButton.row == selectedButton.row +1
-
-    def checkRow(self):
-        for row in range(0, self.field.shape[0]):
-            for column in range(0, self.field.shape[1]-2):
-                self.pointsInstanz.setEarnedPoints(self.checkItemInRow(row, column))
-        self.updateScoreLabel()
-
-    def checkItemInRow(self, row, column):
-        sameValue = 1
-        # TODO: bei gefundenem paar reihe von neu beginnen
-        while column < 8 and self.field[row][column] == self.field[row][column+1]:
-            sameValue += 1
-            column += 1
-        if sameValue > 2:
-            self.changeRowFieldValues(sameValue ,row, column-sameValue+1)
-        return sameValue
-
-    def checkColumn(self):
-        for row in reversed(range(0+2, self.field.shape[0])):
-            for column in range(0, self.field.shape[1]):
-                self.pointsInstanz.setEarnedPoints(self.checkItemInColumn(row, column))
-                column += 1
-        self.updateScoreLabel()
-
-    def checkItemInColumn(self, row, column):
-        # TODO: bei gefundenem paar zeile von neu beginnen
-        sameValue = 1
-        while row > 0 and self.field[row][column] == self.field[row-1][column]:
-            sameValue += 1
-            row -= 1
-        if sameValue > 2:
-            self.changeColumnFieldValues(sameValue, row+sameValue, column)
-        return sameValue
-
-    def changeColumnFieldValues(self, sameValues, row, column):
-        for row in reversed(range(0, row)):
-            if row >= sameValues:
-                self.field[row][column] = self.field[row-sameValues][column]
-            else:
-                self.field[row][column] = random.randint(0, 6)
-            button = SelectedButton(row, column, self.buttonIds)
-            self.changePicture(button)
-
-    def changeRowFieldValues(self, sameValues, row, column):
-        for column in range(column, column+sameValues):
-            actualRow = row
-            for actualRow in reversed(range(0, actualRow+1)):
-                if actualRow > 0:
-                    self.field[actualRow][column] = self.field[actualRow-1][column]
-                else:
-                    self.field[actualRow][column] = random.randint(0,6)
-                button = SelectedButton(actualRow, column, self.buttonIds)
-                self.changePicture(button)
 
     def updateScoreLabel(self):
         self.scoreLabel.configure(text=self.pointsInstanz.points)
