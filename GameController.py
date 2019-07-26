@@ -14,6 +14,7 @@ class GameController:
         self.firstSelectedButton = None
         self.secondSelectedButton = None
         self.buttonIds = None
+        self.updateScoreLabel()
 
     def buttonClicked(self, row, column, buttonIds):
         self.buttonIds = buttonIds
