@@ -1,18 +1,24 @@
 from SelectedButton import SelectedButton
 from Images import Images
 from PIL import ImageTk, Image
+import random
+from Points import Points
+from FieldAnalyzer import FieldAnalyzer
 
 class GameController:
     
     def __init__(self, scoreLabel, field):
-        self.points = 0
+        self.pointsInstanz = Points()
         self.scoreLabel = scoreLabel
         self.field = field
         self.oneButtonIsSelected = False
         self.firstSelectedButton = None
         self.secondSelectedButton = None
+        self.buttonIds = None
+        self.updateScoreLabel()
 
     def buttonClicked(self, row, column, buttonIds):
+        self.buttonIds = buttonIds
         selectedButton = SelectedButton(row,column,buttonIds)
         if not self.oneButtonIsSelected:
             self.firstButtonAction(selectedButton)
@@ -34,8 +40,10 @@ class GameController:
         self.secondSelectedButton = selectedButton
         self.disselectFirstButtonAction()
         self.changePictures()
-        self.checkRow()
-        self.checkColumn()
+        fieldAnalyzer = FieldAnalyzer(self.field, self.pointsInstanz, self.buttonIds)
+        fieldAnalyzer.checkRow()
+        fieldAnalyzer.checkColumn()
+        self.updateScoreLabel()
 
     def disselectFirstButtonAction(self):
         self.firstSelectedButton.button.configure(highlightbackground='#e8e8e8')
@@ -86,54 +94,5 @@ class GameController:
     def secondButtonIsUnderFirstButton(self, selectedButton):
         return self.firstSelectedButton.row == selectedButton.row +1
 
-    def checkRow(self):
-        for row in reversed(range(0, self.field.shape[0])):
-            for column in range(0, self.field.shape[1]-3):
-                self.points += self.checkForEarnedPoints(self.checkItemInRow(row, column))
-        self.setScoreLabel(self.points)
-
-    def checkItemInRow(self, row, column):
-        sameValue = 1
-        # TODO: bei gefundenem paar reihe von neu beginnen
-        while column < 8 and self.field[row][column] == self.field[row][column+1]:
-            sameValue += 1
-            column += 1
-        return sameValue
-
-    def checkColumn(self):
-        for row in reversed(range(0+3, self.field.shape[0])):
-            for column in range(0, self.field.shape[1]):
-                self.points += self.checkForEarnedPoints(self.checkItemInColumn(row, column))
-                column += 1
-        self.setScoreLabel(self.points)
-
-    def checkItemInColumn(self, row, column):
-        # TODO: bei gefundenem paar zeile von neu beginnen
-        sameValue = 1
-        while row < 9 and self.field[row][column] == self.field[row+1][column]:
-            sameValue += 1
-            row += 1
-        return sameValue
-
-    def checkForEarnedPoints(self, sameValues):
-        if sameValues == 3:
-            return 10
-        elif sameValues == 4:
-            return 20
-        elif sameValues == 5:
-            return 30
-        elif sameValues == 6:
-            return 40
-        elif sameValues == 7:
-            return 50
-        elif sameValues == 8:
-            return 60
-        elif sameValues == 9:
-            return 70
-        elif sameValues == 10:
-            return 80
-        else:
-            return 0
-
-    def setScoreLabel(self, score):
-        self.scoreLabel.configure(text=score)
+    def updateScoreLabel(self):
+        self.scoreLabel.configure(text=self.pointsInstanz.points)
