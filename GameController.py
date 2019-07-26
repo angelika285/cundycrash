@@ -90,7 +90,7 @@ class GameController:
         return self.firstSelectedButton.row == selectedButton.row +1
 
     def checkRow(self):
-        for row in reversed(range(0, self.field.shape[0])):
+        for row in range(0, self.field.shape[0]):
             for column in range(0, self.field.shape[1]-2):
                 self.points += self.checkForEarnedPoints(self.checkItemInRow(row, column))
         self.setScoreLabel(self.points)
@@ -101,6 +101,8 @@ class GameController:
         while column < 8 and self.field[row][column] == self.field[row][column+1]:
             sameValue += 1
             column += 1
+        if sameValue > 2:
+            self.changeRowFieldValues(sameValue ,row, column-sameValue+1)
         return sameValue
 
     def checkColumn(self):
@@ -148,6 +150,17 @@ class GameController:
                 self.field[row][column] = random.randint(0, 6)
             button = SelectedButton(row, column, self.buttonIds)
             self.changePicture(button)
+
+    def changeRowFieldValues(self, sameValues, row, column):
+        for column in range(column, column+sameValues):
+            actualRow = row
+            for actualRow in reversed(range(0, actualRow+1)):
+                if actualRow > 0:
+                    self.field[actualRow][column] = self.field[actualRow-1][column]
+                else:
+                    self.field[actualRow][column] = random.randint(0,6)
+                button = SelectedButton(actualRow, column, self.buttonIds)
+                self.changePicture(button)
 
     def setScoreLabel(self, score):
         self.scoreLabel.configure(text=score)
