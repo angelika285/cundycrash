@@ -8,6 +8,7 @@ from GameButtons import GameButtons
 import numpy as np
 from Images import Images
 from GameController import GameController
+from FieldFiller import FieldFiller
 
 class GameView(Tk.Frame):
     scoreLabel = None
@@ -36,7 +37,8 @@ class GameView(Tk.Frame):
         self.field = self.gameButtons.getFields()
         self.buttonIds = []
 
-        self.gameController = GameController(self.scoreLabel, self.field)
+        fieldFiller = FieldFiller(self.field, self.buttonIds)
+        self.gameController = GameController(self.scoreLabel, fieldFiller)
 
         for i in range(0, self.field.shape[0]):
             for j in range(0, self.field.shape[1]):
@@ -45,16 +47,13 @@ class GameView(Tk.Frame):
                     if (self.gameButtons.getField(i,j) == image.getNumber()):
                         self.originalImage = Image.open(image.getPath())
                         self.photoImage = ImageTk.PhotoImage(self.originalImage)
-                        self.button = Tk.Button(self.frame, image=self.photoImage, command=lambda i=i, j=j:self.gameController.buttonClicked(i, j, self.buttonIds), borderwidth=0, highlightthickness=0)
+                        self.button = Tk.Button(self.frame, image=self.photoImage, command=lambda i=i, j=j:self.gameController.buttonClicked(i, j), borderwidth=0, highlightthickness=0)
                         self.button.image = self.photoImage
                         self.buttonIds.append(self.button)
                 self.button.grid(row=i + 1,  column= j)
-
-    def getScoreLabel(self):
-        return self.scoreLabel
-    
-    def setScoreLabel(self, score):
-        self.scoreLabel.config(text=score)
+        
+        fieldFiller.field = self.field
+        fieldFiller.buttonIds = self.buttonIds
 
 if __name__ == "__main__": 
     root=Tk.Tk()

@@ -4,31 +4,34 @@ from PIL import ImageTk, Image
 import random
 from Points import Points
 from FieldAnalyzer import FieldAnalyzer
+from ControllValues import ControllValues
 
 class GameController:
     
-    def __init__(self, scoreLabel, field):
+    def __init__(self, scoreLabel, fieldFiller):
+        self.fieldFiller = fieldFiller
         self.pointsInstanz = Points()
         self.scoreLabel = scoreLabel
-        self.field = field
+        self.field = fieldFiller.field
         self.oneButtonIsSelected = False
         self.firstSelectedButton = None
         self.secondSelectedButton = None
-        self.buttonIds = None
+        self.buttonIds = fieldFiller.buttonIds
         self.updateScoreLabel()
 
-    def buttonClicked(self, row, column, buttonIds):
-        self.buttonIds = buttonIds
-        selectedButton = SelectedButton(row,column,buttonIds)
+    def buttonClicked(self, row, column):
+        selectedButton = SelectedButton(row,column,self.buttonIds)
         if not self.oneButtonIsSelected:
             self.firstButtonAction(selectedButton)
-        elif self.firstSelectedButtonIsNotSecondSelectedButton(selectedButton) and (self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow(selectedButton) or self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameColumn(selectedButton)):
-            self.secondButtonAction(selectedButton)
-        elif not self.firstSelectedButtonIsNotSecondSelectedButton(selectedButton):
-            self.disselectFirstButtonAction()
         else:
-            self.disselectFirstButtonAction()
-            self.firstButtonAction(selectedButton)
+            controll = ControllValues(self.firstSelectedButton, selectedButton)
+            if controll.firstSelectedButtonIsNotSecondSelectedButton() and (controll.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow() or controll.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameColumn()):
+                self.secondButtonAction(selectedButton)
+            elif not controll.firstSelectedButtonIsNotSecondSelectedButton():
+                self.disselectFirstButtonAction()
+            else:
+                self.disselectFirstButtonAction()
+                self.firstButtonAction(selectedButton)
 
     def firstButtonAction(self, selectedButton):
         self.firstSelectedButton = selectedButton
@@ -51,48 +54,13 @@ class GameController:
 
     def changePictures(self):
         self.changeFieldValues()
-        self.changePicture(self.firstSelectedButton)
-        self.changePicture(self.secondSelectedButton)
-    
-    def changePicture(self, button):
-        for image in Images:
-            if self.field[button.row][button.column] == image.getNumber():
-                self.originalImage = Image.open(image.getPath())
-                self.photoImage = ImageTk.PhotoImage(self.originalImage)
-                button.button.configure(image=self.photoImage)
-                button.button.image = self.photoImage
+        self.fieldFiller.changePicture(self.firstSelectedButton)
+        self.fieldFiller.changePicture(self.secondSelectedButton)
 
     def changeFieldValues(self):
         temp = self.field[self.firstSelectedButton.row][self.firstSelectedButton.column]
         self.field[self.firstSelectedButton.row][self.firstSelectedButton.column] = self.field[self.secondSelectedButton.row][self.secondSelectedButton.column]
         self.field[self.secondSelectedButton.row][self.secondSelectedButton.column] = temp
-
-    def firstSelectedButtonIsNotSecondSelectedButton(self, selectedButton):
-        return not self.firstSelectedButton.button == selectedButton.button
-
-    def secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow(self, selectedButton):
-        return self.secondButtonIsInSameRowAsFirstButton(selectedButton) and (self.secondButtonIsLeftOfFirstButton(selectedButton) or self.secondButtonIsRightOfFirstButton(selectedButton))
-
-    def secondButtonIsInSameRowAsFirstButton(self, selectedButton):
-        return self.firstSelectedButton.row == selectedButton.row
-
-    def secondButtonIsLeftOfFirstButton(self, selectedButton):
-        return self.firstSelectedButton.column == selectedButton.column -1
-
-    def secondButtonIsRightOfFirstButton(self, selectedButton):
-        return self.firstSelectedButton.column == selectedButton.column +1
-
-    def secondSelectedButtonIsNextToFirstSelectedButtonInTheSameColumn(self, selectedButton):
-        return self.secondButtonIsInSameColumnAsFirstButton(selectedButton) and (self.secondButtonIsAboveOfFirstButton(selectedButton) or self.secondButtonIsUnderFirstButton(selectedButton))
-
-    def secondButtonIsInSameColumnAsFirstButton(self, selectedButton):
-        return self.firstSelectedButton.column == selectedButton.column
-
-    def secondButtonIsAboveOfFirstButton(self, selectedButton):
-        return self.firstSelectedButton.row == selectedButton.row -1
-
-    def secondButtonIsUnderFirstButton(self, selectedButton):
-        return self.firstSelectedButton.row == selectedButton.row +1
 
     def updateScoreLabel(self):
         self.scoreLabel.configure(text=self.pointsInstanz.points)
