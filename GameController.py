@@ -7,19 +7,19 @@ from FieldAnalyzer import FieldAnalyzer
 
 class GameController:
     
-    def __init__(self, scoreLabel, field):
+    def __init__(self, scoreLabel, fieldFiller):
+        self.fieldFiller = fieldFiller
         self.pointsInstanz = Points()
         self.scoreLabel = scoreLabel
-        self.field = field
+        self.field = fieldFiller.field
         self.oneButtonIsSelected = False
         self.firstSelectedButton = None
         self.secondSelectedButton = None
-        self.buttonIds = None
+        self.buttonIds = fieldFiller.buttonIds
         self.updateScoreLabel()
 
-    def buttonClicked(self, row, column, buttonIds):
-        self.buttonIds = buttonIds
-        selectedButton = SelectedButton(row,column,buttonIds)
+    def buttonClicked(self, row, column):
+        selectedButton = SelectedButton(row,column,self.buttonIds)
         if not self.oneButtonIsSelected:
             self.firstButtonAction(selectedButton)
         elif self.firstSelectedButtonIsNotSecondSelectedButton(selectedButton) and (self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameRow(selectedButton) or self.secondSelectedButtonIsNextToFirstSelectedButtonInTheSameColumn(selectedButton)):
@@ -51,16 +51,8 @@ class GameController:
 
     def changePictures(self):
         self.changeFieldValues()
-        self.changePicture(self.firstSelectedButton)
-        self.changePicture(self.secondSelectedButton)
-    
-    def changePicture(self, button):
-        for image in Images:
-            if self.field[button.row][button.column] == image.getNumber():
-                self.originalImage = Image.open(image.getPath())
-                self.photoImage = ImageTk.PhotoImage(self.originalImage)
-                button.button.configure(image=self.photoImage)
-                button.button.image = self.photoImage
+        self.fieldFiller.changePicture(self.firstSelectedButton)
+        self.fieldFiller.changePicture(self.secondSelectedButton)
 
     def changeFieldValues(self):
         temp = self.field[self.firstSelectedButton.row][self.firstSelectedButton.column]
