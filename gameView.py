@@ -34,7 +34,7 @@ class GameView(Tk.Frame):
         self.scoreLabel.grid(row=0, column=1)
 
         self.gameButtons = GameButtons()
-        self.field = self.gameButtons.field()
+        self.field = self.gameButtons.getFields()
         self.buttonIds = []
 
         fieldFiller = FieldFiller(self.field, self.buttonIds)
