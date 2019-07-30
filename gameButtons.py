@@ -20,4 +20,10 @@ class GameButtons:
         for row in range(0, self.field.shape[0]):
             for column in range(0, self.field.shape[1]-2):
                 while self.field[row][column] == self.field[row][column+1] and self.field[row][column] == self.field[row][column+2]:
-                    self.field[row][column] = random.randint(0, 6)
+                    self.field[row][column+2] = random.randint(0, 6)
+
+    def checkForRightInitializedColumn(self):
+        for row in range(0, self.field.shape[0]-2):
+            for column in range(0, self.field.shape[1]):
+                while self.field[row][column] == self.field[row+1][column] and self.field[row][column] == self.field[row+2][column]:
+                    self.field[row+2][column] = random.randint(0, 6)
