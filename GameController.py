@@ -44,8 +44,7 @@ class GameController:
         self.disselectFirstButtonAction()
         self.changePictures()
         fieldAnalyzer = FieldAnalyzer(self.field, self.pointsInstanz, self.buttonIds)
-        fieldAnalyzer.checkRow()
-        fieldAnalyzer.checkColumn()
+        fieldAnalyzer.checkField()
         self.updateScoreLabel()
 
     def disselectFirstButtonAction(self):
