@@ -44,8 +44,8 @@ class GameController:
         self.disselectFirstButtonAction()
         self.changePictures()
         fieldAnalyzer = FieldAnalyzer(self.field, self.pointsInstanz, self.buttonIds)
-        foundMoreThanOne = fieldAnalyzer.checkField()
-        if not foundMoreThanOne:
+        fieldAnalyzer.checkField()
+        if fieldAnalyzer.foundMoreThanOne == False:
             self.returnButtonsAction()
         self.updateScoreLabel()
 

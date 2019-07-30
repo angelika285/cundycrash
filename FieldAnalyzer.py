@@ -1,4 +1,5 @@
 from FieldFiller import FieldFiller
+from Field import Field
 
 class FieldAnalyzer:
 
@@ -15,7 +16,6 @@ class FieldAnalyzer:
             self.foundFields = False
             self.checkRow()
             self.checkColumn()
-        return self.foundMoreThanOne
 
     def checkRow(self):
         for row in range(0, self.field.shape[0]):
@@ -24,7 +24,7 @@ class FieldAnalyzer:
 
     def checkItemInRow(self, row, column):
         sameValue = 1
-        while column < 8 and self.field[row][column] == self.field[row][column+1]:
+        while column < Field.numberOfColumns - 2 and self.field[row][column] == self.field[row][column+1]:
             sameValue += 1
             column += 1
         if sameValue > 2:
