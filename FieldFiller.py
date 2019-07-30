@@ -5,9 +5,16 @@ from PIL import ImageTk, Image
 
 class FieldFiller:
 
-    def __init__(self, field, buttonIds):
+    def __init__(self, field, buttonIds, gameButtons):
         self.field = field
         self.buttonIds = buttonIds
+        self.gameButtons = gameButtons
+
+    def getNumberOfRows(self):
+        self.gameButtons.getNumberOfRows
+
+    def getNumberOfColumns(self):
+        self.gameButtons.getNumberOfColumns
 
     def changeColumnFieldValues(self, sameValues, row, column):
         for row in reversed(range(0, row)):
