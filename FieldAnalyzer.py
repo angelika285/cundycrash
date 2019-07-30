@@ -15,7 +15,6 @@ class FieldAnalyzer:
             self.foundFields = False
             self.checkRow()
             self.checkColumn()
-        return self.foundMoreThanOne
 
     def checkRow(self):
         for row in range(0, self.field.shape[0]):
