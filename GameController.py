@@ -44,8 +44,13 @@ class GameController:
         self.disselectFirstButtonAction()
         self.changePictures()
         fieldAnalyzer = FieldAnalyzer(self.field, self.pointsInstanz, self.buttonIds)
-        fieldAnalyzer.checkField()
+        foundMoreThanOne = fieldAnalyzer.checkField()
+        if not foundMoreThanOne:
+            self.returnButtonsAction()
         self.updateScoreLabel()
+
+    def returnButtonsAction(self):
+        self.changePictures()
 
     def disselectFirstButtonAction(self):
         self.firstSelectedButton.button.configure(highlightbackground='#e8e8e8')

@@ -7,6 +7,7 @@ class FieldAnalyzer:
         self.pointsInstanz = pointsInstanz
         self.fieldFiller = FieldFiller(self.field, buttonIds)
         self.foundFields = False
+        self.foundMoreThanOne = False
 
     def checkField(self):
         self.foundFields = True
@@ -14,6 +15,7 @@ class FieldAnalyzer:
             self.foundFields = False
             self.checkRow()
             self.checkColumn()
+        return self.foundMoreThanOne
 
     def checkRow(self):
         for row in range(0, self.field.shape[0]):
@@ -28,6 +30,7 @@ class FieldAnalyzer:
         if sameValue > 2:
             self.fieldFiller.changeRowFieldValues(sameValue ,row, column-sameValue+1)
             self.foundFields = True
+            self.foundMoreThanOne = True
         return sameValue
 
     def checkColumn(self):
@@ -44,4 +47,5 @@ class FieldAnalyzer:
         if sameValue > 2:
             self.fieldFiller.changeColumnFieldValues(sameValue, row+sameValue, column)
             self.foundFields = True
+            self.foundMoreThanOne = True
         return sameValue
