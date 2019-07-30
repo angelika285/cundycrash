@@ -9,6 +9,7 @@ class GameButtons:
     def __init__(self):
         self.field = np.random.randint(6, size=(self.numberOfColumns, self.numberOfRows))
         self.checkForRightInitializedRow()
+        self.checkForRightInitializedColumn()
     
     def getFields(self):
         return self.field
