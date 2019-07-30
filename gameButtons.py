@@ -6,7 +6,7 @@ class GameButtons:
     numberOfColumns = 10
     field = None
 
-    def __init__(self):
+    def initializeGameButtons(self):
         self.field = np.random.randint(6, size=(self.numberOfColumns, self.numberOfRows))
         self.checkForRightInitialization()
     
