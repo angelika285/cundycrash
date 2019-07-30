@@ -31,9 +31,13 @@ class GameButtons:
 
     def checkRow(self, row, column):
         while self.field[row][column] == self.field[row][column+1] and self.field[row][column] == self.field[row][column+2]:
-            self.field[row][column] = random.randint(0,5)
+            self.fillFieldWithNewValue(row, column)
 
     def checkColumn(self, row, column, oldValue):
         while (self.field[row][column] == self.field[row+1][column] and self.field[row][column] == self.field[row+2][column]) or self.field[row][column] == oldValue:
-            self.field[row][column] = random.randint(0,5)
+            self.fillFieldWithNewValue(row, column)
+
+    def fillFieldWithNewValue(self, row, column):
+        self.field[row][column] = random.randint(0,5)
+
     
