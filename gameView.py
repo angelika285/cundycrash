@@ -37,7 +37,7 @@ class GameView(Tk.Frame):
         self.field = self.gameButtons.getFields()
         self.buttonIds = []
 
-        fieldFiller = FieldFiller(self.field, self.buttonIds, self.gameButtons)
+        fieldFiller = FieldFiller(self.field, self.buttonIds)
         self.gameController = GameController(self.scoreLabel, fieldFiller)
 
         for i in range(0, self.field.shape[0]):
