@@ -14,7 +14,7 @@ class FieldFiller:
             if row >= sameValues:
                 self.field[row][column] = self.field[row-sameValues][column]
             else:
-                self.field[row][column] = random.randint(0, 6)
+                self.field[row][column] = random.randint(0,5)
             button = SelectedButton(row, column, self.buttonIds)
             self.changePicture(button)
 
@@ -25,7 +25,7 @@ class FieldFiller:
                 if actualRow > 0:
                     self.field[actualRow][column] = self.field[actualRow-1][column]
                 else:
-                    self.field[actualRow][column] = random.randint(0,6)
+                    self.field[actualRow][column] = random.randint(0,5)
                 button = SelectedButton(actualRow, column, self.buttonIds)
                 self.changePicture(button)
 
