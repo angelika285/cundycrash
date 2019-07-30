@@ -1,13 +1,12 @@
 import random
 import numpy as np
+from Field import Field
 
 class GameButtons:
-    numberOfRows = 9
-    numberOfColumns = 10
     field = None
 
-    def initializeGameButtons(self):
-        self.field = np.random.randint(6, size=(self.numberOfColumns, self.numberOfRows))
+    def __init__(self):
+        self.field = np.random.randint(6, size=(Field.numberOfColumns, Field.numberOfRows))
         self.checkForRightInitialization()
     
     def getFields(self):
